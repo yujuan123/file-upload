@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="js/jquery-3.1.0.min.js"></script>
+
+</head>
+<body>
+<form class="form-horizontal" enctype='multipart/form-data' method='post' action='javascript:;'>
+    <input type="file" id="choose"/>
+    <button onclick="handle()">上传</button>
+    <img class="newImg"/>
+</form>
+
+<script>
+
+    function handle() {
+        let file = document.getElementById("choose").files[0];
+        let formData = new FormData();
+        formData.append("avatar", file);
+        $.ajax({
+            type: 'POST',
+            url: '/profile',
+            data: formData,
+            async: false,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                $(".newImg").attr("src", data.filePath);
+            },
+            error: function (err) {
+                console.log(err.message);
+            }
+        })
+    }
+</script>
+</body>
+</html>
